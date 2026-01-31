@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Microloan Eligibility Checker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0078d7;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            grid-column: 1 / -1;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+
+        .result {
+            margin-top: 25px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .eligible {
+            background-color: #e6ffed;
+            color: #1a7f37;
+            border: 1px solid #1a7f37;
+        }
+
+        .not-eligible {
+            background-color: #ffecec;
+            color: #a70000;
+            border: 1px solid #a70000;
+        }
+
+        ul {
+            margin-top: 10px;
+        }
+
+        ul li {
+            margin: 6px 0;
+            line-height: 1.4;
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0078d7;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Microloan Eligibility Checker</h1>
+    </header>
+
+    <div class="container">
+        <form method="POST" action="/predict">
+            <div>
+                <label>Age</label>
+                <input type="number" name="age" required />
+            </div>
+
+            <div>
+                <label>Income Level</label>
+                <select name="income" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Employment Type</label>
+                <select name="employment" required>
+                    <option value="Salaried">Salaried</option>
+                    <option value="Self-employed">Self-employed</option>
+                    <option value="Daily wage">Daily wage</option>
+                    <option value="Farmer">Farmer</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Credit Score Proxy (0–100)</label>
+                <input type="number" name="credit" min="0" max="100" required />
+            </div>
+
+            <div>
+                <label>Previous Loan History</label>
+                <select name="history" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Mobile Access</label>
+                <select name="mobile" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Internet Availability</label>
+                <select name="internet" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Financial Literacy Score (0–10)</label>
+                <input type="number" name="literacy" min="0" max="10" required />
+            </div>
+
+            <button type="submit">Check Eligibility</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result {% if 'Eligible' in prediction %}eligible{% else %}not-eligible{% endif %}">
+                <h2>{{ prediction }}</h2>
+                {% if advice %}
+                    <div>
+                        <h3>💡 Suggested Improvements:</h3>
+                        <ul>
+                            {% for tip in advice %}
+                                <li>{{ tip }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <nav>
+        <a href="/">🏠 Home</a>
+        <a href="/tips">📘 Financial Literacy Tips</a>
+    </nav>
+</body>
+</html>
