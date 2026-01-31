@@ -21,15 +21,15 @@ This project aims to promote financial awareness and inclusion by helping users 
 
 ## How To Run
 
-  1. Install required libraries
+  1. Install required libraries:
       pip install flask pandas scikit-learn numpy
 
-  2. Run the Flask application
+  2. Run the Flask application:
       python app.py
 
   3. Open in browser
 
-  4. Using the app
+  4. Using the app: 
       Enter the required user details in the form
       Submit to get financial inclusion prediction
       View the guidance provided based on the result
