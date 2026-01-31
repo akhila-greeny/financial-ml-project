@@ -1,5 +1,6 @@
 # Financial Inclusion Prediction using Machine Learning
 
+FinBridge is a Flask-based web application that predicts whether a user is eligible for a microloan using a Machine Learning model and provides personalized financial advice based on the prediction.
 A Flask-based web application that predicts whether a user is financially included (has access to financial services) using a Machine Learning model and provides insightful guidance based on the prediction.
 This project aims to promote financial awareness and inclusion by helping users understand their financial status through data-driven analysis.
 
